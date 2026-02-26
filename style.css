@@ -1,14 +1,70 @@
 body {
+    font-family: Arial, sans-serif;
+    background-color: #e3f2fd;
     text-align: center;
-    font-family: Arial;
-    background: linear-gradient(to right, purple, blue);
-    color: white;
-    padding: 50px;
+    margin: 0;
+    padding: 0;
 }
 
-#weather-container {
-    background: rgba(255,255,255,0.2);
-    padding: 20px;
-    border-radius: 10px;
-    display: inline-block;
+.container {
+    margin-top: 60px;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.search-box {
+    margin-bottom: 25px;
+}
+
+#cityInput {
+    padding: 10px;
+    width: 220px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#cityInput:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+#searchBtn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+}
+
+#searchBtn:hover {
+    background-color: #2980b9;
+}
+
+#searchBtn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+/* Loading Spinner */
+.loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 20px auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 20px;
 }

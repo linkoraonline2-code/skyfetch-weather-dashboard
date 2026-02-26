@@ -1,32 +1,69 @@
-// Step 1: Add your API key
-const apiKey = "e78698b82a45e75b2e0f5ab26e283d48";
+const cityInput = document.getElementById("cityInput");
+const searchBtn = document.getElementById("searchBtn");
+const weatherContainer = document.getElementById("weatherContainer");
 
-// Step 2: Choose a city
-const city = "London";
+// Show loading spinner
+function showLoading() {
+    weatherContainer.innerHTML = `
+        <div class="loader"></div>
+        <p>Loading weather data...</p>
+    `;
+}
 
-// Step 3: Create API URL
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+// Show error message
+function showError(message) {
+    weatherContainer.innerHTML = `
+        <div class="error">${message}</div>
+    `;
+}
 
-// Step 4: Fetch weather data
-axios.get(url)
-.then(function(response) {
+// Fetch weather data
+async function getWeather(city) {
+    try {
+        showLoading();
+        searchBtn.disabled = true;
 
-    const data = response.data;
+        const response = await axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=e78698b82a45e75b2e0f5ab26e283d48&units=metric`
+        );
 
-    document.getElementById("city").textContent = data.name;
+        const data = response.data;
 
-    document.getElementById("temperature").textContent =
-        "Temperature: " + data.main.temp + "°C";
+        weatherContainer.innerHTML = `
+            <h2>${data.name}</h2>
+            <p>🌡 Temperature: ${data.main.temp}°C</p>
+            <p>☁ Condition: ${data.weather[0].description}</p>
+            <p>💧 Humidity: ${data.main.humidity}%</p>
+            <p>🌬 Wind Speed: ${data.wind.speed} m/s</p>
+        `;
 
-    document.getElementById("description").textContent =
-        data.weather[0].description;
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            showError("City not found. Please enter a valid city.");
+        } else {
+            showError("Something went wrong. Please try again.");
+        }
+    } finally {
+        searchBtn.disabled = false;
+    }
+}
 
-    const iconCode = data.weather[0].icon;
+// Button click event
+searchBtn.addEventListener("click", () => {
+    const city = cityInput.value.trim();
 
-    document.getElementById("icon").src =
-        `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    if (!city) {
+        showError("Please enter a city name.");
+        return;
+    }
 
-})
-.catch(function(error) {
-    console.log("Error:", error);
+    getWeather(city);
+    cityInput.value = "";
+});
+
+// Enter key support
+cityInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        searchBtn.click();
+    }
 });
