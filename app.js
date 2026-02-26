@@ -1,5 +1,5 @@
 // Step 1: Add your API key
-const apiKey = "PASTE_YOUR_API_KEY_HERE";
+const apiKey = "e78698b82a45e75b2e0f5ab26e283d48";
 
 // Step 2: Choose a city
 const city = "London";
