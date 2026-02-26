@@ -1,14 +1,22 @@
-body {
-    text-align: center;
-    font-family: Arial;
-    background: linear-gradient(to right, purple, blue);
-    color: white;
-    padding: 50px;
+.forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
 }
 
-#weather-container {
-    background: rgba(255,255,255,0.2);
-    padding: 20px;
+.forecast-card {
+    background: white;
+    padding: 15px;
     border-radius: 10px;
-    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.forecast-card:hover {
+    transform: translateY(-5px);
+}
+
+.forecast-card img {
+    width: 60px;
 }
